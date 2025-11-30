@@ -115,6 +115,41 @@ int main() {
 
 			SDL_Event e;
 			SDL_zero(e);
+
+			//The main loop
+			while (quit == false) {
+				//get event data
+				while (SDL_PollEvent(&e) == true) { //Poll events check if any user action happened in this frame.
+					//If event is quit type
+					if (e.type = SDL_EVENT_QUIT) {
+						quit = true; //End the loop
+					}
+
+					//Fill the surface white to clear the window every frame
+					SDL_FillSurfaceRect(
+						gScreenSurface, // surface we want to draw to
+						nullptr, // area to fill (nullptr fills entire surface)
+						SDL_MapSurfaceRGB(gScreenSurface,
+							0xFF,
+							0xFF,
+							0xFF
+						) //What you want to fil it with (white in this case)
+					);
+
+					//Render image on screen
+					SDL_BlitSurface(
+						gHelloWorld, // what image to blit
+						nullptr, //what part of the image to blit (nullptr for entire image)
+						gScreenSurface, // the sruface we want to blit to.
+						nullptr // destination on the surface (nullptr for top left corner) x = 0 y = 0
+					);
+
+					//Update the surface
+					SDL_UpdateWindowSurface(gWindow);
+
+
+				}
+			}
 		}
 	} 
 

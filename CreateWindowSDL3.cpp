@@ -8,7 +8,7 @@
 */
 
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
+//#include <SDL3/SDL_main.h>
 #include <string>
 #include <iostream>
 
@@ -74,7 +74,7 @@ bool loadMedia() {
 	bool success{ true };
 
 	// load splash image
-	std::string imagePath{ "01-hello-sdl3/hello_world.bmp" };
+	std::string imagePath{ "C:\\Users\\Charbie\\source\\repos\\CreateWindowSDL3\\hello-sdl3.bmp" };
 	if (gHelloWorld = SDL_LoadBMP(imagePath.c_str()); gHelloWorld == nullptr)
 	{
 		success = false;
@@ -104,8 +104,7 @@ int main() {
 	if (init() == false) {
 		SDL_Log("Unable to initalize program...");
 		exitCode = 1;
-	}
-	else {
+	} else {
 		if (loadMedia() == false) {
 			SDL_Log("Unable to load media...");
 			exitCode = 2;
@@ -121,39 +120,45 @@ int main() {
 				//get event data
 				while (SDL_PollEvent(&e) == true) { //Poll events check if any user action happened in this frame.
 					//If event is quit type
-					if (e.type = SDL_EVENT_QUIT) {
+					if (e.type == SDL_EVENT_QUIT) {
 						quit = true; //End the loop
 					}
 
-					//Fill the surface white to clear the window every frame
-					SDL_FillSurfaceRect(
-						gScreenSurface, // surface we want to draw to
-						nullptr, // area to fill (nullptr fills entire surface)
-						SDL_MapSurfaceRGB(gScreenSurface,
-							0xFF,
-							0xFF,
-							0xFF
-						) //What you want to fil it with (white in this case)
-					);
-
-					//Render image on screen
-					SDL_BlitSurface(
-						gHelloWorld, // what image to blit
-						nullptr, //what part of the image to blit (nullptr for entire image)
-						gScreenSurface, // the sruface we want to blit to.
-						nullptr // destination on the surface (nullptr for top left corner) x = 0 y = 0
-					);
-
-					//Update the surface
-					SDL_UpdateWindowSurface(gWindow);
-
 
 				}
+
+				/* Render Section*/
+				//Fill the surface white to clear the window every frame
+				SDL_FillSurfaceRect(
+					gScreenSurface, // surface we want to draw to
+					nullptr, // area to fill (nullptr fills entire surface)
+					SDL_MapSurfaceRGB(gScreenSurface,
+						0xFF,
+						0xFF,
+						0xFF
+					) //What you want to fil it with (white in this case)
+				);
+
+				//Render image on screen
+				SDL_BlitSurface(
+					gHelloWorld, // what image to blit
+					nullptr, //what part of the image to blit (nullptr for entire image)
+					gScreenSurface, // the sruface we want to blit to.
+					nullptr // destination on the surface (nullptr for top left corner) x = 0 y = 0
+				);
+
+				//Update the surface
+				SDL_UpdateWindowSurface(gWindow);
 			}
+
+	
 		}
 	} 
 
 
+	//Clean up
+	close();
 
+	return exitCode;
 
 }
